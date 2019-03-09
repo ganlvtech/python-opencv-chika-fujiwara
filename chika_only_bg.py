@@ -60,7 +60,7 @@ bg = cv2.imread('bg.jpg')
 bg_h, bg_w, _ = bg.shape
 # 打开视频
 cap = cv2.VideoCapture('av42322248.mp4')
-cap.set(cv2.CAP_PROP_POS_FRAMES, 177)
+# cap.set(cv2.CAP_PROP_POS_FRAMES, 177)
 # 打开输出视频文件。一次请只使用一个文件，仅写入一个文件。如果同时使用多个文件，同时写入多个文件的话，一旦 try-except 触发，可能会多出 1 帧。
 # out_matches_img = cv2.VideoWriter('chika_matches_img.mp4', cv2.VideoWriter_fourcc('X', 'V', 'I', 'D'), cap.get(cv2.CAP_PROP_FPS), (1616, 385))
 out_only_bg = cv2.VideoWriter('chika_only_bg.mp4', cv2.VideoWriter_fourcc('X', 'V', 'I', 'D'), cap.get(cv2.CAP_PROP_FPS), (1920, 814))
@@ -161,15 +161,15 @@ while cv2.waitKey(1) != ord('q'):
                 if last_2_frame_bg_scale < last_frame_bg_scale < this_frame_bg_scale or last_2_frame_bg_scale > last_frame_bg_scale > this_frame_bg_scale:
                     frame_bg_scale = last_frame_bg_scale
                 else:
-                    frame_bg_scale = np.average((last_2_frame_bg_scale, this_frame_bg_scale))
+                    frame_bg_scale = np.average((last_2_frame_bg_scale, this_frame_bg_scale, last_frame_bg_scale))
                 if last_2_frame_bg_dx < last_frame_bg_dx < this_frame_bg_dx or last_2_frame_bg_dx > last_frame_bg_dx > this_frame_bg_dx:
                     frame_bg_dx = last_frame_bg_dx
                 else:
-                    frame_bg_dx = int(np.average((last_2_frame_bg_dx, this_frame_bg_dx)))
+                    frame_bg_dx = int(np.average((last_2_frame_bg_dx, this_frame_bg_dx, last_frame_bg_dx)))
                 if last_2_frame_bg_dy < last_frame_bg_dy < this_frame_bg_dy or last_2_frame_bg_dy > last_frame_bg_dy > this_frame_bg_dy:
                     frame_bg_dy = last_frame_bg_dy
                 else:
-                    frame_bg_dy = int(np.average((last_2_frame_bg_dy, this_frame_bg_dy)))
+                    frame_bg_dy = int(np.average((last_2_frame_bg_dy, this_frame_bg_dy, last_frame_bg_dy)))
 
         # 计算相同区域
         if frame_bg_scale is None:
